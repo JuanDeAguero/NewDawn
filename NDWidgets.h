@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "GameWidget.generated.h"
+#include "NDWidgets.generated.h"
 
 UCLASS()
 class NEWDAWN_API UGameWidget : public UUserWidget

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "BlueprintLibrary.generated.h"
+#include "NDBlueprintLibrary.generated.h"
 
 UCLASS()
 class NEWDAWN_API UBlueprintLibrary : public UBlueprintFunctionLibrary

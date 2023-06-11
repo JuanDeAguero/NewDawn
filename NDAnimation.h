@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "AnimInstancePlayer.generated.h"
+#include "NDAnimation.generated.h"
 
 UCLASS()
 class NEWDAWN_API UAnimInstancePlayer : public UAnimInstance

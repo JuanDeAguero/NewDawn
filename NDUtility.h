@@ -3,33 +3,23 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Utility.generated.h"
+#include "NDUtility.generated.h"
 
 USTRUCT(BlueprintType)
 struct FVector64
 {
     GENERATED_BODY()
-
-    UPROPERTY(BlueprintReadWrite)
-    int64 X;
-
-    UPROPERTY(BlueprintReadWrite)
-    int64 Y;
-
-    UPROPERTY(BlueprintReadWrite)
-    int64 Z;
+    UPROPERTY(BlueprintReadWrite) int64 X;
+    UPROPERTY(BlueprintReadWrite) int64 Y;
+    UPROPERTY(BlueprintReadWrite) int64 Z;
 };
 
 USTRUCT(BlueprintType)
 struct FLocation64
 {
     GENERATED_BODY()
-
-    UPROPERTY(BlueprintReadWrite)
-    FVector Location;
-
-    UPROPERTY(BlueprintReadWrite)
-    FVector64 Offset;
+    UPROPERTY(BlueprintReadWrite) FVector Location;
+    UPROPERTY(BlueprintReadWrite) FVector64 Offset;
 };
 
 UENUM(BlueprintType)

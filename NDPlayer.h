@@ -3,21 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Utility.h"
-
-#include "Stars.h"
-#include "Star.h"
-#include "Planet.h"
-#include "GameWidget.h"
-
+#include "NDUtility.h"
+#include "NDActors.h"
+#include "NDWidgets.h"
 #include "VoxelWorld.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "Engine/DirectionalLight.h"
 #include "Engine/SkyLight.h"
 #include "Engine/EngineTypes.h"
-
 #include "GameFramework/PlayerController.h"
-#include "PlayerControllerND.generated.h"
+#include "NDPlayer.generated.h"
 
 UCLASS()
 class NEWDAWN_API APlayerControllerND : public APlayerController
