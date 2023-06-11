@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "NDWidgets.generated.h"
 
+class UGameWidget;
+
 UCLASS()
 class NEWDAWN_API UGameWidget : public UUserWidget
 {

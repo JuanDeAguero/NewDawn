@@ -6,6 +6,10 @@
 #include "GameFramework/Actor.h"
 #include "NDActors.generated.h"
 
+class AStars;
+class AStar;
+class APlanet;
+
 UCLASS()
 class NEWDAWN_API AStars : public AActor
 {

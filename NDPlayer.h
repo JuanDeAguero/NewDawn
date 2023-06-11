@@ -14,6 +14,9 @@
 #include "GameFramework/PlayerController.h"
 #include "NDPlayer.generated.h"
 
+// class APlayerStateND;
+class APlayerControllerND;
+
 UCLASS()
 class NEWDAWN_API APlayerControllerND : public APlayerController
 {
@@ -45,6 +48,7 @@ public:
 
     UPROPERTY(BlueprintReadWrite) FTimerHandle ScanTimerHandle;
     UPROPERTY(BlueprintReadWrite) FTimerHandle TravelTimerHandle;
+
     UPROPERTY(BlueprintReadWrite) FLocation64 Destination;
     UPROPERTY(BlueprintReadWrite) EDestinationType DestinationType;
     UPROPERTY(BlueprintReadWrite) EGravityProfile GravityProfile;
@@ -55,7 +59,7 @@ public:
     UPROPERTY(BlueprintReadWrite) UGameWidget* GameWidget;
 
     APlayerControllerND() {}
-    
+
     UFUNCTION(BlueprintCallable)
     virtual void BeginPlay() override
     {

@@ -5,6 +5,11 @@
 #include "CoreMinimal.h"
 #include "NDUtility.generated.h"
 
+class UDoOnce;
+class UDelayAction;
+class UActorValidityCheck;
+class UBoolCheck;
+
 USTRUCT(BlueprintType)
 struct FVector64
 {

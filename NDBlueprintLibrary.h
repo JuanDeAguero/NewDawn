@@ -6,6 +6,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "NDBlueprintLibrary.generated.h"
 
+class UBlueprintLibrary;
+
 UCLASS()
 class NEWDAWN_API UBlueprintLibrary : public UBlueprintFunctionLibrary
 {

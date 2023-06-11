@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "NDAnimation.generated.h"
 
+class UAnimInstancePlayer;
+
 UCLASS()
 class NEWDAWN_API UAnimInstancePlayer : public UAnimInstance
 {
