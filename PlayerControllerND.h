@@ -71,9 +71,7 @@ public:
             SkyAtmosphereCommands();
             SetupTimers();
             SetupInputMapping();
-            SpawnStars();
             SetWorldRefs();
-            SetActorsVisibility();
             SpawnFirstCharacter();
 
             GameWidget = Cast<UGameWidget>(CreateWidget<UGameWidget>( this, UGameWidget::StaticClass() ));
@@ -155,21 +153,9 @@ public:
     {
 
     }
-
-    UFUNCTION(BlueprintCallable)
-    void SpawnStars()
-    {
-
-    }
     
     UFUNCTION(BlueprintCallable)
     void SetWorldRefs()
-    {
-
-    }
-
-    UFUNCTION(BlueprintCallable)
-    void SetActorsVisibility()
     {
 
     }
