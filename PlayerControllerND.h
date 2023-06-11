@@ -26,95 +26,38 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 
 public:
 
-    UPROPERTY(BlueprintReadWrite)
-    bool InPlanet = false;
+    UPROPERTY(BlueprintReadWrite) bool InPlanet = false;
+    UPROPERTY(BlueprintReadWrite) bool PlanetPreview = true;
+    UPROPERTY(BlueprintReadWrite) bool TeleportedToPlanet = false;
+    UPROPERTY(BlueprintReadWrite) bool Scanning = false;
+    UPROPERTY(BlueprintReadWrite) bool CursorHit = false;
+    UPROPERTY(BlueprintReadWrite) bool DestinationSet = false;
+    UPROPERTY(BlueprintReadWrite) bool Traveling = false;
+    UPROPERTY(BlueprintReadWrite) bool Rebasing = false;
+    UPROPERTY(BlueprintReadWrite) bool FirstPawnPossessed = false;
 
-    UPROPERTY(BlueprintReadWrite)
-    bool PlanetPreview = true;
+    UPROPERTY(BlueprintReadWrite) AStars* Stars;
+    UPROPERTY(BlueprintReadWrite) AStar* Star;
+    UPROPERTY(BlueprintReadWrite) AVoxelWorld* VoxelPlanet;
+    UPROPERTY(BlueprintReadWrite) AVoxelWorld* VoxelPlanetPreview;
+    UPROPERTY(BlueprintReadWrite) AVoxelWorld* VoxelOcean;
+    UPROPERTY(BlueprintReadWrite) AActor* CloudsSphere;
+    UPROPERTY(BlueprintReadWrite) AActor* Skybox;
+    UPROPERTY(BlueprintReadWrite) ASkyLight* SkyLight;
+    UPROPERTY(BlueprintReadWrite) ASkyAtmosphere* SkyAtmosphere;
+    UPROPERTY(BlueprintReadWrite) ADirectionalLight* DirectionalLight;
+    UPROPERTY(BlueprintReadWrite) ADirectionalLight* DirectionalLightNight;
 
-    UPROPERTY(BlueprintReadWrite)
-    bool TeleportedToPlanet = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool Scanning = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool CursorHit = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool DestinationSet = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool Traveling = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool Rebasing = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    bool FirstPawnPossessed = false;
-
-    UPROPERTY(BlueprintReadWrite)
-    FTimerHandle ScanTimerHandle;
-
-    UPROPERTY(BlueprintReadWrite)
-    FTimerHandle TravelTimerHandle;
-
-    UPROPERTY(BlueprintReadWrite)
-    AStars* Stars;
-
-    UPROPERTY(BlueprintReadWrite)
-    AStar* Star;
-
-    UPROPERTY(BlueprintReadWrite)
-    AVoxelWorld* VoxelPlanet;
-
-    UPROPERTY(BlueprintReadWrite)
-    AVoxelWorld* VoxelPlanetPreview;
-
-    UPROPERTY(BlueprintReadWrite)
-    AVoxelWorld* VoxelOcean;
-
-    UPROPERTY(BlueprintReadWrite)
-    AActor* CloudsSphere;
-
-    UPROPERTY(BlueprintReadWrite)
-    AActor* Skybox;
-
-    UPROPERTY(BlueprintReadWrite)
-    ASkyLight* SkyLight;
-
-    UPROPERTY(BlueprintReadWrite)
-    ASkyAtmosphere* SkyAtmosphere;
-
-    UPROPERTY(BlueprintReadWrite)
-    ADirectionalLight* DirectionalLight;
-
-    UPROPERTY(BlueprintReadWrite)
-    ADirectionalLight* DirectionalLightNight;
-
-    UPROPERTY(BlueprintReadWrite)
-    FLocation64 Destination;
-
-    UPROPERTY(BlueprintReadWrite)
-    EDestinationType DestinationType;
-
-    UPROPERTY(BlueprintReadWrite)
-    EGravityProfile GravityProfile;
-
-    UPROPERTY(BlueprintReadWrite)
-    int64 FirstPawnId = 0;
-
-    UPROPERTY(BlueprintReadWrite)
-    float StartingAngle = 0.0f;
-
-    UPROPERTY(BlueprintReadWrite)
-    FRotator StartRotation;
-
-    UPROPERTY(BlueprintReadWrite)
-    FRotator TargetRotation;
-
-    UPROPERTY(BlueprintReadWrite)
-    UGameWidget* GameWidget;
+    UPROPERTY(BlueprintReadWrite) FTimerHandle ScanTimerHandle;
+    UPROPERTY(BlueprintReadWrite) FTimerHandle TravelTimerHandle;
+    UPROPERTY(BlueprintReadWrite) FLocation64 Destination;
+    UPROPERTY(BlueprintReadWrite) EDestinationType DestinationType;
+    UPROPERTY(BlueprintReadWrite) EGravityProfile GravityProfile;
+    UPROPERTY(BlueprintReadWrite) int64 FirstPawnId = 0;
+    UPROPERTY(BlueprintReadWrite) float StartingAngle = 0.0f;
+    UPROPERTY(BlueprintReadWrite) FRotator StartRotation;
+    UPROPERTY(BlueprintReadWrite) FRotator TargetRotation;
+    UPROPERTY(BlueprintReadWrite) UGameWidget* GameWidget;
 
     APlayerControllerND() {}
     
@@ -122,6 +65,7 @@ public:
     virtual void BeginPlay() override
     {
         Super::BeginPlay();
+
         if (!GetWorld()->IsServer())
         {
             SkyAtmosphereCommands();
