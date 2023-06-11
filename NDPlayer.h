@@ -17,6 +17,12 @@
 // class APlayerStateND;
 class APlayerControllerND;
 
+/**
+ * Represents a player on its local computer.
+ * 
+ * Manages the local state of the game and the actors that are not replicated over the network.
+ * Also responsible to spawn the first pawn on the server and possess it.
+ */
 UCLASS()
 class NEWDAWN_API APlayerControllerND : public APlayerController
 {
@@ -24,6 +30,7 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 
 public:
 
+    // State booleans, not replicated
     UPROPERTY(BlueprintReadWrite) bool InPlanet = false;
     UPROPERTY(BlueprintReadWrite) bool PlanetPreview = true;
     UPROPERTY(BlueprintReadWrite) bool TeleportedToPlanet = false;
@@ -34,6 +41,7 @@ public:
     UPROPERTY(BlueprintReadWrite) bool Rebasing = false;
     UPROPERTY(BlueprintReadWrite) bool FirstPawnPossessed = false;
 
+    // World references
     UPROPERTY(BlueprintReadWrite) AStars* Stars;
     UPROPERTY(BlueprintReadWrite) AStar* Star;
     UPROPERTY(BlueprintReadWrite) AVoxelWorld* VoxelPlanet;
@@ -46,20 +54,47 @@ public:
     UPROPERTY(BlueprintReadWrite) ADirectionalLight* DirectionalLight;
     UPROPERTY(BlueprintReadWrite) ADirectionalLight* DirectionalLightNight;
 
-    UPROPERTY(BlueprintReadWrite) FTimerHandle ScanTimerHandle;
-    UPROPERTY(BlueprintReadWrite) FTimerHandle TravelTimerHandle;
+    // Timer that runs when scanning
+    UPROPERTY(BlueprintReadWrite)
+    FTimerHandle ScanTimerHandle;
 
+    // Timer that runs when traveling
+    UPROPERTY(BlueprintReadWrite)
+    FTimerHandle TravelTimerHandle;
+
+    // Destination data used for Spaceship travels
     UPROPERTY(BlueprintReadWrite) FLocation64 Destination;
     UPROPERTY(BlueprintReadWrite) EDestinationType DestinationType;
-    UPROPERTY(BlueprintReadWrite) EGravityProfile GravityProfile;
-    UPROPERTY(BlueprintReadWrite) int64 FirstPawnId = 0;
-    UPROPERTY(BlueprintReadWrite) float StartingAngle = 0.0f;
     UPROPERTY(BlueprintReadWrite) FRotator StartRotation;
     UPROPERTY(BlueprintReadWrite) FRotator TargetRotation;
-    UPROPERTY(BlueprintReadWrite) UGameWidget* GameWidget;
+
+    // Gravity profile used for character movement
+    UPROPERTY(BlueprintReadWrite)
+    EGravityProfile GravityProfile;
+
+    // Id of the first pawn this player should possess
+    UPROPERTY(BlueprintReadWrite)
+    int64 FirstPawnId = 0;
+
+    // Angle of the planet when the player first enters
+    UPROPERTY(BlueprintReadWrite)
+    float StartingAngle = 0.0f;
+
+    // Main widget where other widgets are rendered
+    UPROPERTY(BlueprintReadWrite)
+    UGameWidget* GameWidget;
 
     APlayerControllerND() {}
 
+    /**
+     * Preliminary setup for the player.
+     * 
+     * Sets up sky atmosphere, timers, input mapping and world references.
+     * Spawns a character and possesses it.
+     * Creates game widget.
+     * 
+     * @note Runs when when play begins for this actor.
+     */
     UFUNCTION(BlueprintCallable)
     virtual void BeginPlay() override
     {
@@ -70,7 +105,7 @@ public:
             SkyAtmosphereCommands();
             SetupTimers();
             SetupInputMapping();
-            SetWorldRefs();
+            SetWorldReferences();
             SpawnFirstCharacter();
 
             GameWidget = Cast<UGameWidget>(CreateWidget<UGameWidget>( this, UGameWidget::StaticClass() ));
@@ -78,6 +113,9 @@ public:
         }
     }
 
+    /*
+     * Commands to improve the quality of the Sky Atmosphere.
+     */
     UFUNCTION(BlueprintCallable)
     void SkyAtmosphereCommands()
     {
@@ -154,7 +192,7 @@ public:
     }
     
     UFUNCTION(BlueprintCallable)
-    void SetWorldRefs()
+    void SetWorldReferences()
     {
 
     }
