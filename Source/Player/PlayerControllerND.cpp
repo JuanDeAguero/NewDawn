@@ -8,12 +8,9 @@
 #include "Net/UnrealNetwork.h"
 
 APlayerControllerND::APlayerControllerND()
-    : Offset({ 0, 0, 0 }),
-      FirstCharacterId(0),
-      InPlanet(false), PlanetPreview(true), TeleportedToPlanet(false),
-      Scanning(false), CursorHit(false), DestinationSet(false), Traveling(false),
-      Rebasing(false),
-      StartingAngle(0.0f), StarAngle(0.0f) {}
+{
+    PlanetPreview = true;
+}
 
 void APlayerControllerND::BeginPlay()
 {

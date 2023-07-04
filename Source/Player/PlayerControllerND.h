@@ -14,6 +14,20 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 {
     GENERATED_BODY()
 
+public:
+
+    /* ... */
+    bool Scanning;
+
+    /* ... */
+    bool CursorHit;
+
+    /* ... */
+    bool DestinationSet;
+
+    /* ... */
+    bool Traveling;
+
 protected:
 
     /* Editor reference to the input mapping context. To be set in editor. */
@@ -28,6 +42,9 @@ private:
     
     /* Player local offset. When "RebaseOrigin" is called this will change. */
     FVector64 Offset;
+
+    /* ... */
+    bool Rebasing;
 
     /* Id of the first character to possess when starting the game.
        Set by the server after calling "Server_SpawnCharacter". */
@@ -57,21 +74,6 @@ private:
 
     /* ... */
     bool TeleportedToPlanet;
-
-    /* ... */
-    bool Scanning;
-
-    /* ... */
-    bool CursorHit;
-
-    /* ... */
-    bool DestinationSet;
-
-    /* ... */
-    bool Traveling;
-
-    /* ... */
-    bool Rebasing;
 
     /* ... */
     class AStars* Stars;
