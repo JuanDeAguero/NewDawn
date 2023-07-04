@@ -3,12 +3,12 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class NewDawnEditorTarget : TargetRules
+public class NewDawnServerTarget : TargetRules
 {
-    public NewDawnEditorTarget( TargetInfo target )
+    public NewDawnServerTarget( TargetInfo target )
         : base(target)
     {
-        Type = TargetType.Editor;
+        Type = TargetType.Server;
         DefaultBuildSettings = BuildSettingsVersion.V2;
         ExtraModuleNames.Add("NewDawn");
     }
