@@ -33,6 +33,7 @@ void ACharacterND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props 
 
     DOREPLIFETIME( ACharacterND, Walking );
     DOREPLIFETIME( ACharacterND, Sitting );
+    // TODO: DOREPLIFETIME_CONDITION ...
 }
 
 void ACharacterND::SetupPlayerInputComponent( UInputComponent* inputComponent )
