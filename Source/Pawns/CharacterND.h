@@ -71,11 +71,11 @@ public:
 
     virtual void SetupPlayerInputComponent( UInputComponent* inputComponent );
 
-    UFUNCTION( Server, Reliable )
-    void Server_SetWalking( bool newValue );
-
     UFUNCTION(BlueprintPure)
     UPARAM(DisplayName="Walking") bool GetWalking();
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetWalking( bool newValue );
 
     UFUNCTION(BlueprintPure)
     UPARAM(DisplayName="Sitting") bool GetSitting();
