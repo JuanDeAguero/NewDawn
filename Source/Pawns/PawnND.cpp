@@ -42,14 +42,19 @@ int64 APawnND::GetId()
     return Id;
 }
 
-void APawnND::Server_SetId_Implementation( int64 newId )
-{
-    Id = newId;
-}
-
 FLocation64 APawnND::GetLocation()
 {
     return Location;
+}
+
+FRotator APawnND::GetRotation()
+{
+    return Rotation;
+}
+
+void APawnND::Server_SetId_Implementation( int64 newId )
+{
+    Id = newId;
 }
 
 void APawnND::Server_SetLocation_Implementation( const FLocation64& newLocation, bool updateClient )
@@ -62,11 +67,6 @@ void APawnND::Server_SetLocation_Implementation( const FLocation64& newLocation,
         LocationClient = newLocation;
         OnRep_LocationClient();
     }
-}
-
-FRotator APawnND::GetRotation()
-{
-    return Rotation;
 }
 
 void APawnND::Server_SetRotation_Implementation( const FRotator& newRotation, bool updateClient )

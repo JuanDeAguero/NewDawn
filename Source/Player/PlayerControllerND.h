@@ -172,7 +172,6 @@ public:
      */
     UFUNCTION( Server, Reliable )
     void Server_SetFirstCharacterId( int64 id );
-    void Server_SetFirstCharacterId_Implementation( int64 id );
 
 protected:
     
@@ -187,6 +186,11 @@ protected:
     virtual void Tick( float deltaTime ) override;
 
 private:
+
+    /**
+     * 
+     */
+    void Server_SetFirstCharacterId_Implementation( int64 id );
 
     /**
      * 

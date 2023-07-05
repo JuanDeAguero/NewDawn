@@ -40,25 +40,28 @@ public:
 
     UFUNCTION( Server, Reliable )
     void Server_SetId( int64 newId );
-    void Server_SetId_Implementation( int64 newId );
 
     FLocation64 GetLocation();
 
     UFUNCTION( Server, Reliable )
     void Server_SetLocation( const FLocation64& newLocation, bool updateClient );
-    void Server_SetLocation_Implementation( const FLocation64& newLocation, bool updateClient );
 
     FRotator GetRotation();
 
     UFUNCTION( Server, Reliable )
     void Server_SetRotation( const FRotator& newRotation, bool updateClient );
-    void Server_SetRotation_Implementation( const FRotator& newRotation, bool updateClient );
 
 protected:
     
     virtual void BeginPlay() override;
 
 private:
+
+    void Server_SetId_Implementation( int64 newId );
+
+    void Server_SetLocation_Implementation( const FLocation64& newLocation, bool updateClient );
+
+    void Server_SetRotation_Implementation( const FRotator& newRotation, bool updateClient );
 
     UFUNCTION()
     void OnRep_Location();

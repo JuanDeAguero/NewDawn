@@ -37,14 +37,19 @@ int64 AActorND::GetId()
     return Id;
 }
 
-void AActorND::Server_SetId_Implementation( int64 newId )
-{
-    Id = newId;
-}
-
 FLocation64 AActorND::GetLocation()
 {
     return Location;
+}
+
+FRotator AActorND::GetRotation()
+{
+    return Rotation;
+}
+
+void AActorND::Server_SetId_Implementation( int64 newId )
+{
+    Id = newId;
 }
 
 void AActorND::Server_SetLocation_Implementation( const FLocation64& newLocation, bool updateClient )
@@ -57,11 +62,6 @@ void AActorND::Server_SetLocation_Implementation( const FLocation64& newLocation
         LocationClient = newLocation;
         OnRep_LocationClient();
     }
-}
-
-FRotator AActorND::GetRotation()
-{
-    return Rotation;
 }
 
 void AActorND::Server_SetRotation_Implementation( const FRotator& newRotation, bool updateClient )

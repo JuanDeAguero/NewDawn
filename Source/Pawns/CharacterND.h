@@ -40,6 +40,24 @@ protected:
 
 private:
 
+    UPROPERTY(Replicated)
+    bool Walking;
+
+    UPROPERTY(Replicated)
+    bool Sitting;
+
+    UPROPERTY(ReplicatedUsing=OnRep_BodyRotation)
+    FRotator BodyRotation;
+
+    UPROPERTY(ReplicatedUsing=OnRep_BodyRotationClient)
+    FRotator BodyRotationClient;
+
+    UPROPERTY(ReplicatedUsing=OnRep_SpringArmRotation)
+    FRotator SpringArmRotation;
+
+    UPROPERTY(ReplicatedUsing=OnRep_SpringArmRotationClient)
+    FRotator SpringArmRotationClient;
+
     enum class EGravityProfile
     {
         Planet, Moon, Spaceship, SpaceStation, SpaceRing
@@ -53,12 +71,47 @@ public:
 
     virtual void SetupPlayerInputComponent( UInputComponent* inputComponent );
 
+    UFUNCTION( Server, Reliable )
+    void Server_SetWalking( bool newValue );
+
+    UFUNCTION(BlueprintPure)
+    UPARAM(DisplayName="Walking") bool GetWalking();
+
+    UFUNCTION(BlueprintPure)
+    UPARAM(DisplayName="Sitting") bool GetSitting();
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetBodyRotation( const FRotator& newRotation, bool updateClient );
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetSpringArmRotation( const FRotator& newRotation, bool updateClient );
+
 private:
 
     void Look( const FInputActionValue& actionValue );
 
     void Move( const FInputActionValue& actionValue );
 
+    void MoveCompleted( const FInputActionValue& actionValue );
+
     void Interact();
+
+    void Server_SetWalking_Implementation( bool newValue );
+
+    void Server_SetBodyRotation_Implementation( const FRotator& newRotation, bool updateClient );
+
+    void Server_SetSpringArmRotation_Implementation( const FRotator& newRotation, bool updateClient );
+
+    UFUNCTION()
+    void OnRep_BodyRotation();
+
+    UFUNCTION()
+    void OnRep_BodyRotationClient();
+
+    UFUNCTION()
+    void OnRep_SpringArmRotation();
+
+    UFUNCTION()
+    void OnRep_SpringArmRotationClient();
 
 };
