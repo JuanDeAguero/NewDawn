@@ -11,7 +11,8 @@ void AGameModeND::BeginPlay()
     Server_SpawnActor( SpaceStationAClass, { FVector(), { 0, 0, 0 } }, FRotator() );
 }
 
-void AGameModeND::Server_SpawnActor_Implementation( TSubclassOf<AActorND> actorClass, const FLocation64& location, const FRotator& rotation )
+void AGameModeND::Server_SpawnActor_Implementation( TSubclassOf<AActorND> actorClass, const FLocation64& location,
+                                                    const FRotator& rotation )
 {
     FActorSpawnParameters spawnParams;
     spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -22,7 +23,8 @@ void AGameModeND::Server_SpawnActor_Implementation( TSubclassOf<AActorND> actorC
     actor->Server_SetRotation( rotation, false );
 }
 
-void AGameModeND::Server_SpawnPawn_Implementation( TSubclassOf<APawnND> pawnClass, const FLocation64& location, const FRotator& rotation, APlayerControllerND* controller )
+void AGameModeND::Server_SpawnPawn_Implementation( TSubclassOf<APawnND> pawnClass, const FLocation64& location, const FRotator& rotation,
+                                                   APlayerControllerND* controller )
 {
     FActorSpawnParameters spawnParams;
     spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
