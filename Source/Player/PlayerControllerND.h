@@ -16,21 +16,23 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 
 public:
 
-    /* ... */
+    /* Represents the state of the scanning process.
+       A player can use the scanning feature to find a destination for travel. */
     bool Scanning;
 
-    /* ... */
+    /* Represents whether the cursor has hit a target destination when scanning. */
     bool CursorHit;
 
-    /* ... */
+    /* Indicaties if a destination has been set by the player when scanning.
+       See "EDestinationType" for the types of destinations. (star, planet, space station...) */
     bool DestinationSet;
 
-    /* ... */
+    /* Signifies whether the player is currently traveling to a set destination. */
     bool Traveling;
 
 protected:
 
-    /* Editor reference to the input mapping context. To be set in editor. */
+    /* Reference to the input mapping context. To be set in editor. */
     UPROPERTY(EditDefaultsOnly)
     class UInputMappingContext* InputMappingContext;
 
@@ -43,7 +45,7 @@ private:
     /* Player local offset. When "RebaseOrigin" is called this will change. */
     FVector64 Offset;
 
-    /* ... */
+    /* Represents whether the player is rebasing. See the method "RebaseOrigin" for more info. */
     bool Rebasing;
 
     /* Id of the first character to possess when starting the game.
@@ -54,25 +56,28 @@ private:
     /* Timer used to find the first character to possess when starting the game. */
     FTimerHandle FirstCharacterTimer;
 
-    /* ... */
+    /* Timer used when the player is scanning. */
     FTimerHandle ScanTimer;
 
-    /* ... */
+    /* Timer used when the player is traveling. */
     FTimerHandle TravelTimer;
 
-    /* ... */
+    /* Timer used for the rotation of the star around the planet, when the player is in the planet. */
     FTimerHandle StarRotationTimer;
 
-    /* ... */
+    /* Timer used for the rotation of the planet, when the player is not in the planet. */
     FTimerHandle PlanetRotationTimer;
 
-    /* ... */
+    /* Represents whether the player is in the planet. */
     bool InPlanet;
 
-    /* ... */
+    /* Represents whether the planet preview is visible.
+       When the preview is visible, the actual voxel planet is not visible (and vice versa).
+       Note that the player can be in planet and the preview still visible. */
     bool PlanetPreview;
 
-    /* ... */
+    /* Signifies whether the player teleported inside the planet.
+       "CheckPlanetDistance" will see that the player is inside the planet and will set this value to false. */
     bool TeleportedToPlanet;
 
     /* ... */
