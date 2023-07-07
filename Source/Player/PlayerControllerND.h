@@ -239,6 +239,13 @@ private:
     /**
      * 
      */
+    UFUNCTION( Server, Reliable )
+    void Server_UnPossess();
+    void Server_UnPossess_Implementation();
+
+    /**
+     * 
+     */
     void CheckPlanetDistance();
 
 };

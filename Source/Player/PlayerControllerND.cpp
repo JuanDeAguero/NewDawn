@@ -16,6 +16,7 @@ void APlayerControllerND::BeginPlay()
 {
     Super::BeginPlay();
 
+    // Run only on client player controllers.
     if (IsLocalPlayerController())
     {
         SetupInputMapping();
@@ -85,15 +86,23 @@ void APlayerControllerND::SkyAtmosphereCommands()
 
 void APlayerControllerND::SpawnFirstCharacter()
 {
+    // Tells the server to spawn the character that this player will possess.
     Server_SpawnCharacter();
+
+    // Run a timer that every 0.1s checks if there exists a character with "Id" == "FirstCharacterId".
+    // When the character exists, possess it.
+    // A timer is needed because the the call to "Server_SpawnCharacter" is async.
+    // It will take some time to create the character on the server and replicate it to the clients.
 
     FTimerDelegate timerDelegate;
     timerDelegate.BindLambda( [this]
     {
         if ( FirstCharacterId == 0 ) return;
+
         TArray<AActor*> foundActors;
         ACharacterND* foundCharacter = nullptr;
         UGameplayStatics::GetAllActorsOfClass( GetWorld(), ACharacterND::StaticClass(), foundActors );
+
         for ( AActor* actor : foundActors )
         {
             ACharacterND* character = Cast<ACharacterND>(actor);
@@ -103,12 +112,14 @@ void APlayerControllerND::SpawnFirstCharacter()
                 break;
             }
         }
+
         if (foundCharacter)
         {
             Server_Possess(foundCharacter);
             GetWorld()->GetTimerManager().ClearTimer(FirstCharacterTimer);
         }
     });
+
     GetWorld()->GetTimerManager().SetTimer( FirstCharacterTimer, timerDelegate, 0.1f, true );
 }
 
@@ -123,6 +134,11 @@ void APlayerControllerND::Server_SpawnCharacter_Implementation()
 void APlayerControllerND::Server_Possess_Implementation( class APawnND* pawnND )
 {
     Possess(pawnND);
+}
+
+void APlayerControllerND::Server_UnPossess_Implementation()
+{
+    UnPossess();
 }
 
 void APlayerControllerND::CheckPlanetDistance()

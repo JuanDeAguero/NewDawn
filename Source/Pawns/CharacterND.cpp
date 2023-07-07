@@ -23,6 +23,8 @@ ACharacterND::ACharacterND()
     Body->     SetupAttachment(Root);
     SpringArm->SetupAttachment(Root);
     Camera->   SetupAttachment(SpringArm);
+
+    GravityProfile = EGravityProfile::SpaceStation;
 }
 
 void ACharacterND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props ) const
@@ -33,7 +35,10 @@ void ACharacterND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props 
 
     DOREPLIFETIME( ACharacterND, Walking );
     DOREPLIFETIME( ACharacterND, Sitting );
-    // TODO: DOREPLIFETIME_CONDITION ...
+    DOREPLIFETIME_CONDITION( ACharacterND, BodyRotation,            COND_SkipOwner );
+    DOREPLIFETIME_CONDITION( ACharacterND, BodyRotationClient,      COND_OwnerOnly );
+    DOREPLIFETIME_CONDITION( ACharacterND, SpringArmRotation,       COND_SkipOwner );
+    DOREPLIFETIME_CONDITION( ACharacterND, SpringArmRotationClient, COND_OwnerOnly );
 }
 
 void ACharacterND::SetupPlayerInputComponent( UInputComponent* inputComponent )
@@ -67,6 +72,8 @@ void ACharacterND::Look( const FInputActionValue& actionValue )
     if ( FMath::Abs(x) < 0.1f ) x = 0.0f;
     if ( FMath::Abs(y) < 0.1f ) y = 0.0f;
 
+    if ( x == 0.0f && y == 0.0f ) return;
+
     FRotator newActorRotation = FRotator( 0.0f, x, 0.0f ) + GetActorRotation();
     SetActorRotation(newActorRotation);
     Server_SetRotation( newActorRotation, false );
@@ -92,7 +99,7 @@ void ACharacterND::Move( const FInputActionValue& actionValue )
     if ( FMath::Abs(x) < 0.1f ) x = 0.0f;
     if ( FMath::Abs(y) < 0.1f ) y = 0.0f;
 
-    if ( x == 0 && y == 0 )
+    if ( x == 0.0f && y == 0.0f )
     {
         Server_SetWalking(false);
         return;
@@ -100,7 +107,53 @@ void ACharacterND::Move( const FInputActionValue& actionValue )
 
     Server_SetWalking(true);
 
-    
+    FVector start;
+    FVector end;
+    GetMoveLineTraceParams( x, y, 20.0f, 500.0f, 10.0f, 10.0f, start, end );
+
+    FCollisionQueryParams traceParams;
+    FHitResult hitResult;
+    GetWorld()->LineTraceSingleByChannel( hitResult, start, end, ECC_Visibility, traceParams );
+
+    FVector hitLocation = hitResult.Location;
+    FRotator rotation;
+
+    switch (GravityProfile)
+    {
+        case EGravityProfile::Planet:
+        {
+
+        }
+        case EGravityProfile::SpaceStation:
+        {
+
+        }
+    }
+
+    SetActorLocation(hitLocation);
+    //SetActorRotation(rotation);
+    Body->SetRelativeRotation(FRotator( 0.0f, -90.0f, 0.0f ));
+}
+
+void ACharacterND::GetMoveLineTraceParams( float x, float y, float up, float down, float forward, float right, FVector& start, FVector& end )
+{
+    FVector a = GetActorForwardVector() * y * forward;
+    FVector b = GetActorUpVector() * up;
+    FVector c = GetActorRightVector() * x * right;
+    FVector d = GetActorUpVector() * down;
+
+    start = GetActorLocation() + a + b + c;
+    end = start - d;
+}
+
+FRotator ACharacterND::GetRotationInPlanet( FVector location )
+{
+    return FRotator();
+}
+
+FRotator ACharacterND::GetRotationInSpaceStation( FVector gravityDirection )
+{
+    return FRotator();
 }
 
 void ACharacterND::MoveCompleted( const FInputActionValue& actionValue )
@@ -116,6 +169,11 @@ void ACharacterND::Interact()
 void ACharacterND::Server_SetWalking_Implementation( bool newValue )
 {
     Walking = newValue;
+}
+
+void ACharacterND::Server_SetSitting_Implementation( bool newValue )
+{
+    Sitting = newValue;
 }
 
 void ACharacterND::Server_SetBodyRotation_Implementation( const FRotator& newRotation, bool updateClient )

@@ -81,6 +81,9 @@ public:
     UPARAM(DisplayName="Sitting") bool GetSitting();
 
     UFUNCTION( Server, Reliable )
+    void Server_SetSitting( bool newValue );
+
+    UFUNCTION( Server, Reliable )
     void Server_SetBodyRotation( const FRotator& newRotation, bool updateClient );
 
     UFUNCTION( Server, Reliable )
@@ -92,11 +95,19 @@ private:
 
     void Move( const FInputActionValue& actionValue );
 
+    void GetMoveLineTraceParams( float x, float y, float up, float down, float forward, float right, FVector& start, FVector& end );
+
+    FRotator GetRotationInPlanet( FVector location );
+
+    FRotator GetRotationInSpaceStation( FVector gravityDirection );
+
     void MoveCompleted( const FInputActionValue& actionValue );
 
     void Interact();
 
     void Server_SetWalking_Implementation( bool newValue );
+
+    void Server_SetSitting_Implementation( bool newValue );
 
     void Server_SetBodyRotation_Implementation( const FRotator& newRotation, bool updateClient );
 
