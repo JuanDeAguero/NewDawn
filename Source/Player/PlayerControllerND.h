@@ -14,21 +14,6 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 {
     GENERATED_BODY()
 
-public:
-
-    /* Player is scanning to find a destination for travel. */
-    bool Scanning;
-
-    /* Cursor has hit a target destination when scanning. */
-    bool CursorHit;
-
-    /* A destination has been set by the player when scanning.
-       See "EDestinationType" for the types of destinations. (star, planet, space station...) */
-    bool DestinationSet;
-
-    /* Player is currently traveling to a set destination. */
-    bool Traveling;
-
 protected:
 
     /* Reference to the input mapping context. To be set in editor. */
@@ -47,19 +32,22 @@ private:
     /* Player is rebasing. See the method "RebaseOrigin" for more info. */
     bool Rebasing;
 
+    /* Timer used to find the first character to possess when starting the game. */
+    FTimerHandle FirstCharacterTimer;
+
     /* Id of the first character to possess when starting the game.
        Set by the server after calling "Server_SpawnCharacter". */
     UPROPERTY(Replicated)
     int64 FirstCharacterId;
 
-    /* Timer used to find the first character to possess when starting the game. */
-    FTimerHandle FirstCharacterTimer;
+    /* Actor holding the intanced static meshes for the stars. */
+    class AStars* Stars;
 
-    /* Timer used when the player is scanning. */
-    FTimerHandle ScanTimer;
+    /* Main star actor. It is moved around the universe and placed at the closest star position. */
+    class AStar* Star;
 
-    /* Timer used when the player is traveling. */
-    FTimerHandle TravelTimer;
+    /* Planet actors. Used for scanning and placing the voxel planets. */
+    TArray< class APlanet* > Planets;
 
     /* Timer used for the rotation of the star around the planet, when the player is in the planet. */
     FTimerHandle StarRotationTimer;
@@ -79,31 +67,28 @@ private:
        "CheckPlanetDistance" will see that the player is in the current planet and will set this value to false. */
     bool TeleportedToPlanet;
 
-    /* ... */
-    class AStars* Stars;
+    FRotator StartRotation;
 
-    /* ... */
-    class AStar* Star;
+    FRotator TargetRotation;
 
-    /* ... */
-    TArray< class APlanet* > Planets;
+    float StartingAngle;
 
-    /* ... */
+    float StarAngle;
+
+    class UDoOnce* DoOnceEnterPlanet;
+
+    class UDoOnce* DoOnceExitPlanet;
+
     class ASkyAtmosphere* SkyAtmosphere;
     
-    /* ... */
     class AActor* CloudsSphere;
 
-    /* ... */
     class AActor* Skybox;
 
-    /* ... */
     class ADirectionalLight* DirectionalLight;
 
-    /* ... */
     class ADirectionalLight* DirectionalLightNight;
 
-    /* ... */
     class ASkyLight* SkyLight;
 
     /* Reference to the voxel world for the planet placed in the level. */
@@ -115,44 +100,38 @@ private:
     /* Reference to the voxel world for the ocean placed in the level. */
     class AVoxelWorld* VoxelOcean;
 
-    /* ... */
+    /* Timer used when the player is scanning. */
+    FTimerHandle ScanTimer;
+
+    /* Player is scanning to find a destination for travel. */
+    bool Scanning;
+
+    /* Cursor has hit a target destination when scanning. */
+    bool CursorHit;
+
+    /* A destination has been set by the player when scanning.
+       See "EDestinationType" for the types of destinations. (star, planet, space station...) */
+    bool DestinationSet;
+
     FLocation64 Destination;
 
-    /* ... */
     enum class EDestinationType
     {
         Star, Planet, Moon, SpaceStation
     };
 
-    /* ... */
     EDestinationType DestinationType;
 
-    /* ... */
-    FRotator StartRotation;
+    /* Timer used when the player is traveling. */
+    FTimerHandle TravelTimer;
 
-    /* ... */
-    FRotator TargetRotation;
+    /* Player is currently traveling to a set destination. */
+    bool Traveling;
 
-    /* ... */
-    float StartingAngle;
-
-    /* ... */
-    float StarAngle;
-
-    /* ... */
     class UGameWidget* GameWidget;
-
-    /* ... */
-    class UDoOnce* DoOnceEnterPlanet;
-
-    /* ... */
-    class UDoOnce* DoOnceExitPlanet;
 
 public:
 
-    /**
-     * Constructor. Sets default values.
-     */
     APlayerControllerND();
 
     /**
@@ -191,61 +170,30 @@ protected:
 
 private:
 
-    /**
-     * 
-     */
-    void Server_SetFirstCharacterId_Implementation( int64 id );
-
-    /**
-     * 
-     */
     void SetupInputMapping();
 
-    /**
-     * 
-     */
     void SetWorldReferences();
 
-    /**
-     * 
-     */
     void SetupTimers();
 
-    /**
-     * 
-     */
     void SkyAtmosphereCommands();
 
-    /**
-     * 
-     */
     void SpawnFirstCharacter();
 
-    /**
-     * 
-     */
     UFUNCTION( Server, Reliable )
     void Server_SpawnCharacter();
     void Server_SpawnCharacter_Implementation();
 
-    /**
-     * 
-     * @param pawnND
-     */
     UFUNCTION( Server, Reliable )
     void Server_Possess( class APawnND* pawnND );
     void Server_Possess_Implementation( class APawnND* pawnND );
 
-    /**
-     * 
-     */
     UFUNCTION( Server, Reliable )
     void Server_UnPossess();
     void Server_UnPossess_Implementation();
 
-    /**
-     * 
-     */
     void CheckPlanetDistance();
+
+    void Server_SetFirstCharacterId_Implementation( int64 id );
 
 };

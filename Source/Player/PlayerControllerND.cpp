@@ -51,12 +51,6 @@ FVector64 APlayerControllerND::GetOffset()
     return Offset;
 }
 
-void APlayerControllerND::Server_SetFirstCharacterId_Implementation( int64 id )
-{
-    if ( id != 0 && FirstCharacterId == 0 )
-        FirstCharacterId = id;
-}
-
 void APlayerControllerND::SetupInputMapping()
 {
     if (!InputMappingContext) return;
@@ -144,4 +138,10 @@ void APlayerControllerND::Server_UnPossess_Implementation()
 void APlayerControllerND::CheckPlanetDistance()
 {
     
+}
+
+void APlayerControllerND::Server_SetFirstCharacterId_Implementation( int64 id )
+{
+    if ( id != 0 && FirstCharacterId == 0 )
+        FirstCharacterId = id;
 }
