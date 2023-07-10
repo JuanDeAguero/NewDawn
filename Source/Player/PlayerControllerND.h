@@ -32,22 +32,13 @@ private:
     /* Player is rebasing. See the method "RebaseOrigin" for more info. */
     bool Rebasing;
 
-    /* Timer used to find the first character to possess when starting the game. */
-    FTimerHandle FirstCharacterTimer;
-
     /* Id of the first character to possess when starting the game.
        Set by the server after calling "Server_SpawnCharacter". */
     UPROPERTY(Replicated)
     int64 FirstCharacterId;
 
-    /* Reference to the voxel world for the planet placed in the level. */
-    class AVoxelWorld* VoxelPlanet;
-
-    /* Reference to the voxel world for the planet preview placed in the level. */
-    class AVoxelWorld* VoxelPlanetPreview;
-
-    /* Reference to the voxel world for the ocean placed in the level. */
-    class AVoxelWorld* VoxelOcean;
+    /* Timer used to find the first character to possess when starting the game. */
+    FTimerHandle FirstCharacterTimer;
 
     /* Actor holding the intanced static meshes for the stars. */
     class AStars* Stars;
@@ -58,11 +49,14 @@ private:
     /* Planet actors. Used for scanning and placing the voxel planets. */
     TArray< class APlanet* > Planets;
 
-    /* Timer used for the rotation of the star around the planet, when the player is in the planet. */
-    FTimerHandle StarRotationTimer;
+    /* Reference to the voxel world for the planet placed in the level. */
+    class AVoxelWorld* VoxelPlanet;
 
-    /* Timer used for the rotation of the planet, when the player is not in the planet. */
-    FTimerHandle PlanetRotationTimer;
+    /* Reference to the voxel world for the planet preview placed in the level. */
+    class AVoxelWorld* VoxelPlanetPreview;
+
+    /* Reference to the voxel world for the ocean placed in the level. */
+    class AVoxelWorld* VoxelOcean;
 
     /* Player is in the current planet. */
     bool InPlanet;
@@ -84,6 +78,12 @@ private:
 
     float StarAngle;
 
+    /* Timer used for the rotation of the star around the planet, when the player is in the planet. */
+    FTimerHandle StarRotationTimer;
+
+    /* Timer used for the rotation of the planet, when the player is not in the planet. */
+    FTimerHandle PlanetRotationTimer;
+
     class UDoOnce* DoOnceEnterPlanet;
 
     class UDoOnce* DoOnceExitPlanet;
@@ -100,11 +100,11 @@ private:
 
     class ASkyLight* SkyLight;
 
-    /* Timer used when the player is scanning. */
-    FTimerHandle ScanTimer;
-
     /* Player is scanning to find a destination for travel. */
     bool Scanning;
+
+    /* Timer used when the player is scanning. */
+    FTimerHandle ScanTimer;
 
     /* Cursor has hit a target destination when scanning. */
     bool CursorHit;
@@ -122,11 +122,11 @@ private:
 
     EDestinationType DestinationType;
 
-    /* Timer used when the player is traveling. */
-    FTimerHandle TravelTimer;
-
     /* Player is currently traveling to a set destination. */
     bool Traveling;
+
+    /* Timer used when the player is traveling. */
+    FTimerHandle TravelTimer;
 
     class UGameWidget* GameWidget;
 
