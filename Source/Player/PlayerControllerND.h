@@ -40,6 +40,15 @@ private:
     UPROPERTY(Replicated)
     int64 FirstCharacterId;
 
+    /* Reference to the voxel world for the planet placed in the level. */
+    class AVoxelWorld* VoxelPlanet;
+
+    /* Reference to the voxel world for the planet preview placed in the level. */
+    class AVoxelWorld* VoxelPlanetPreview;
+
+    /* Reference to the voxel world for the ocean placed in the level. */
+    class AVoxelWorld* VoxelOcean;
+
     /* Actor holding the intanced static meshes for the stars. */
     class AStars* Stars;
 
@@ -90,15 +99,6 @@ private:
     class ADirectionalLight* DirectionalLightNight;
 
     class ASkyLight* SkyLight;
-
-    /* Reference to the voxel world for the planet placed in the level. */
-    class AVoxelWorld* VoxelPlanet;
-
-    /* Reference to the voxel world for the planet preview placed in the level. */
-    class AVoxelWorld* VoxelPlanetPreview;
-
-    /* Reference to the voxel world for the ocean placed in the level. */
-    class AVoxelWorld* VoxelOcean;
 
     /* Timer used when the player is scanning. */
     FTimerHandle ScanTimer;
