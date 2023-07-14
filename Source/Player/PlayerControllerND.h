@@ -14,6 +14,7 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 {
     GENERATED_BODY()
 
+// ====================================================================================
 public:
 
     APlayerControllerND();
@@ -40,6 +41,7 @@ public:
     UFUNCTION( Server, Reliable )
     void Server_SetFirstCharacterId( int64 id );
 
+// ====================================================================================
 protected:
 
     /* Reference to the input mapping context. To be set in editor. */
@@ -49,6 +51,8 @@ protected:
     /* Blueprint class of the player character. To be set in editor. */
     UPROPERTY(EditDefaultsOnly)
     TSubclassOf<ACharacterND> CharacterClass;
+
+    // --------------------------------------------------------------------------------
     
     /**
      * Initial player setup and spawns the first character to possess.
@@ -60,6 +64,7 @@ protected:
      */
     virtual void Tick( float deltaTime ) override;
 
+// ====================================================================================
 private:
 
     // -- Coordinate System -----------------------------------------------------------

@@ -13,7 +13,35 @@ class NEWDAWN_API ACharacterND : public APawnND
 {
     GENERATED_BODY()
 
+// ====================================================================================
+public:
+
+    ACharacterND();
+
+    virtual void SetupPlayerInputComponent( UInputComponent* inputComponent );
+
+    UFUNCTION(BlueprintPure)
+    UPARAM(DisplayName="Walking") bool GetWalking();
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetWalking( bool newValue );
+
+    UFUNCTION(BlueprintPure)
+    UPARAM(DisplayName="Sitting") bool GetSitting();
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetSitting( bool newValue );
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetBodyRotation( const FRotator& newRotation, bool updateClient );
+
+    UFUNCTION( Server, Reliable )
+    void Server_SetSpringArmRotation( const FRotator& newRotation, bool updateClient );
+
+// ====================================================================================
 protected:
+
+    // -- Scene Components ------------------------------------------------------------
 
     class USceneComponent* Root;
 
@@ -29,6 +57,8 @@ protected:
     UPROPERTY(EditDefaultsOnly)
     class UCameraComponent* Camera;
 
+    // -- Input -----------------------------------------------------------------------
+
     UPROPERTY(EditDefaultsOnly)
     class UInputAction* IA_Look;
 
@@ -38,6 +68,7 @@ protected:
     UPROPERTY(EditDefaultsOnly)
     class UInputAction* IA_Interact;
 
+// ====================================================================================
 private:
 
     UPROPERTY(Replicated)
@@ -65,31 +96,7 @@ private:
     
     EGravityProfile GravityProfile;
 
-public:
-
-    ACharacterND();
-
-    virtual void SetupPlayerInputComponent( UInputComponent* inputComponent );
-
-    UFUNCTION(BlueprintPure)
-    UPARAM(DisplayName="Walking") bool GetWalking();
-
-    UFUNCTION( Server, Reliable )
-    void Server_SetWalking( bool newValue );
-
-    UFUNCTION(BlueprintPure)
-    UPARAM(DisplayName="Sitting") bool GetSitting();
-
-    UFUNCTION( Server, Reliable )
-    void Server_SetSitting( bool newValue );
-
-    UFUNCTION( Server, Reliable )
-    void Server_SetBodyRotation( const FRotator& newRotation, bool updateClient );
-
-    UFUNCTION( Server, Reliable )
-    void Server_SetSpringArmRotation( const FRotator& newRotation, bool updateClient );
-
-private:
+    // --------------------------------------------------------------------------------
 
     void Look( const FInputActionValue& actionValue );
 
