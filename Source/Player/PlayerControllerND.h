@@ -197,18 +197,25 @@ private:
 
     UFUNCTION( Server, Reliable )
     void Server_SpawnCharacter();
-    void Server_SpawnCharacter_Implementation();
 
     UFUNCTION( Server, Reliable )
     void Server_Possess( class APawnND* pawnND );
-    void Server_Possess_Implementation( class APawnND* pawnND );
 
     UFUNCTION( Server, Reliable )
     void Server_UnPossess();
-    void Server_UnPossess_Implementation();
 
     void CheckPlanetDistance();
 
+    // -- Rep Implementations --------------------------------------------------------------
+
     void Server_SetFirstCharacterId_Implementation( int64 id );
 
+    void Server_SpawnCharacter_Implementation();
+
+    void Server_Possess_Implementation( class APawnND* pawnND );
+
+    void Server_UnPossess_Implementation();
+
+// =========================================================================================
+// -----------------------------------------------------------------------------------------
 };
