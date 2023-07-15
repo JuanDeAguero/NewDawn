@@ -14,7 +14,7 @@ class NEWDAWN_API APlayerControllerND : public APlayerController
 {
     GENERATED_BODY()
 
-// ====================================================================================
+// =========================================================================================
 public:
 
     APlayerControllerND();
@@ -41,7 +41,7 @@ public:
     UFUNCTION( Server, Reliable )
     void Server_SetFirstCharacterId( int64 id );
 
-// ====================================================================================
+// =========================================================================================
 protected:
 
     /* Reference to the input mapping context. To be set in editor. */
@@ -51,8 +51,8 @@ protected:
     /* Blueprint class of the player character. To be set in editor. */
     UPROPERTY(EditDefaultsOnly)
     TSubclassOf<ACharacterND> CharacterClass;
-
-    // --------------------------------------------------------------------------------
+    
+    // -------------------------------------------------------------------------------------
     
     /**
      * Initial player setup and spawns the first character to possess.
@@ -64,18 +64,18 @@ protected:
      */
     virtual void Tick( float deltaTime ) override;
 
-// ====================================================================================
+// =========================================================================================
 private:
 
-    // -- Coordinate System -----------------------------------------------------------
+    // -- Coordinate System ----------------------------------------------------------------
 
     /* Player local offset. When "RebaseOrigin" is called this will change. */
     FVector64 Offset;
 
     /* Player is rebasing. See the method "RebaseOrigin" for more info. */
     bool Rebasing;
-
-    // -- First Character Id ----------------------------------------------------------
+    
+    // -- First Character Id ---------------------------------------------------------------
 
     /* Id of the first character to possess when starting the game.
        Set by the server after calling "Server_SpawnCharacter". */
@@ -84,60 +84,52 @@ private:
 
     /* Timer used to find the first character to possess when starting the game. */
     FTimerHandle FirstCharacterTimer;
-
-    // -- Stars -----------------------------------------------------------------------
+    
+    // -- Stars ----------------------------------------------------------------------------
 
     /* Actor holding the intanced static meshes for the stars. */
     class AStars* Stars;
 
-    /* Main star actor. It is moved around the universe and placed at the closest star position. */
+    /* Main star actor.
+       It is moved around the universe and placed at the closest star position. */
     class AStar* Star;
 
     float StarAngle;
 
-    /* Timer used for the rotation of the star around the planet, when the player is in the planet. */
+    /* Timer used for the rotation of the star around the planet,
+       when the player is in the planet. */
     FTimerHandle StarRotationTimer;
     
-    // -- Planets ---------------------------------------------------------------------
+    // -- Planets --------------------------------------------------------------------------
 
     /* Planet actors. Used for scanning and placing the voxel planets. */
     TArray< class APlanet* > Planets;
 
-    /* Reference to the voxel world for the planet placed in the level. */
-    class AVoxelWorld* VoxelPlanet;
-
-    /* Reference to the voxel world for the planet preview placed in the level. */
-    class AVoxelWorld* VoxelPlanetPreview;
-
-    /* Reference to the voxel world for the ocean placed in the level. */
-    class AVoxelWorld* VoxelOcean;
+    class AVoxelWorld* VoxelPlanet, *VoxelPlanetPreview, *VoxelOcean;
 
     /* Player is in the current planet. */
     bool InPlanet;
 
     /* Planet preview is visible.
-       When the preview is visible, the actual voxel planet is not visible (and vice versa).
+       When the preview is visible, the actual voxel planet is not visible.
        Note that the player can be in a planet and the preview still visible. */
     bool PlanetPreview;
 
     /* Player teleported to a planet.
-       "CheckPlanetDistance" will see that the player is in the current planet and will set this value to false. */
+       "CheckPlanetDistance" will see that the player is in the current planet
+       and will set this value to false. */
     bool TeleportedToPlanet;
-
-    FRotator StartRotation;
-
-    FRotator TargetRotation;
 
     float StartingAngle;
 
+    FRotator StartRotation, TargetRotation;
+    
     /* Timer used for the rotation of the planet, when the player is not in the planet. */
     FTimerHandle PlanetRotationTimer;
 
-    class UDoOnce* DoOnceEnterPlanet;
+    class UDoOnce* DoOnceEnterPlanet, *DoOnceExitPlanet;
 
-    class UDoOnce* DoOnceExitPlanet;
-
-    // -- Sky -------------------------------------------------------------------------
+    // -- Sky ------------------------------------------------------------------------------
 
     class ASkyAtmosphere* SkyAtmosphere;
     
@@ -145,7 +137,7 @@ private:
 
     class AActor* Skybox;
 
-    // -- Lights ----------------------------------------------------------------------
+    // -- Lights ---------------------------------------------------------------------------
 
     class ADirectionalLight* DirectionalLight;
 
@@ -153,7 +145,7 @@ private:
 
     class ASkyLight* SkyLight;
 
-    // -- Scan ------------------------------------------------------------------------
+    // -- Scan -----------------------------------------------------------------------------
 
     /* Player is scanning to find a destination for travel. */
     bool Scanning;
@@ -164,10 +156,10 @@ private:
     /* Cursor has hit a target destination when scanning. */
     bool CursorHit;
 
-    // -- Destination -----------------------------------------------------------------
+    // -- Destination ----------------------------------------------------------------------
 
     /* A destination has been set by the player when scanning.
-       See "EDestinationType" for the types of destinations. (star, planet, space station...) */
+       See "EDestinationType" for the types of destinations. */
     bool DestinationSet;
 
     FLocation64 Destination;
@@ -179,7 +171,7 @@ private:
 
     EDestinationType DestinationType;
 
-    // -- Travel ----------------------------------------------------------------------
+    // -- Travel ---------------------------------------------------------------------------
 
     /* Player is currently traveling to a set destination. */
     bool Traveling;
@@ -187,11 +179,11 @@ private:
     /* Timer used when the player is traveling. */
     FTimerHandle TravelTimer;
 
-    // -- Widgets ---------------------------------------------------------------------
+    // -- Widgets --------------------------------------------------------------------------
 
     class UGameWidget* GameWidget;
 
-    // --------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------------
 
     void SetupInputMapping();
 

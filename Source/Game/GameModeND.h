@@ -14,11 +14,6 @@ class NEWDAWN_API AGameModeND : public AGameMode
 {
     GENERATED_BODY()
 
-protected:
-
-    UPROPERTY(EditDefaultsOnly)
-    TSubclassOf<AActorND> SpaceStationAClass;
-
 public:
 
     UFUNCTION( Server, Reliable )
@@ -29,6 +24,9 @@ public:
                            class APlayerControllerND* controller );
 
 protected:
+
+    UPROPERTY(EditDefaultsOnly)
+    TSubclassOf<AActorND> SpaceStationAClass;
 
     virtual void BeginPlay() override;
 
