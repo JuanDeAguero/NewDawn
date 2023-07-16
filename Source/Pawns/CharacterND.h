@@ -12,8 +12,7 @@ UCLASS()
 class NEWDAWN_API ACharacterND : public APawnND
 {
     GENERATED_BODY()
-
-// =========================================================================================
+    
 public:
 
     ACharacterND();
@@ -37,11 +36,10 @@ public:
 
     UFUNCTION( Server, Reliable )
     void Server_SetSpringArmRotation( const FRotator& newRotation, bool updateClient );
-
-// =========================================================================================
+    
 protected:
 
-    // -- Scene Components -----------------------------------------------------------------
+    // -- Scene Components --
 
     class USceneComponent* Root;
 
@@ -57,7 +55,7 @@ protected:
     UPROPERTY(EditDefaultsOnly)
     class UCameraComponent* Camera;
     
-    // -- Input ----------------------------------------------------------------------------
+    // -- Input --
 
     UPROPERTY(EditDefaultsOnly)
     class UInputAction* IA_Look;
@@ -67,8 +65,7 @@ protected:
 
     UPROPERTY(EditDefaultsOnly)
     class UInputAction* IA_Interact;
-
-// =========================================================================================
+    
 private:
 
     UPROPERTY(Replicated)
@@ -95,15 +92,12 @@ private:
     };
     
     EGravityProfile GravityProfile;
-    
-    // -------------------------------------------------------------------------------------
 
     void Look( const FInputActionValue& actionValue );
 
     void Move( const FInputActionValue& actionValue );
 
-    void GetMoveLineTraceParams( float x, float y, float up, float down, float forward,
-                                 float right, FVector& start, FVector& end );
+    void GetMoveLineTraceParams( float x, float y, float up, float down, float forward, float right, FVector& start, FVector& end );
 
     FRotator GetRotationInPlanet( FVector location );
 
@@ -117,15 +111,13 @@ private:
 
     void Server_SetSitting_Implementation( bool newValue );
 
-    // -- Rep Implementations --------------------------------------------------------------
+    // -- Rep Implementations --
 
-    void Server_SetBodyRotation_Implementation( const FRotator& newRotation,
-                                                bool updateClient );
+    void Server_SetBodyRotation_Implementation( const FRotator& newRotation, bool updateClient );
 
-    void Server_SetSpringArmRotation_Implementation( const FRotator& newRotation,
-                                                     bool updateClient );
+    void Server_SetSpringArmRotation_Implementation( const FRotator& newRotation, bool updateClient );
                                                      
-    // -- On Rep ---------------------------------------------------------------------------
+    // -- On Rep --
 
     UFUNCTION()
     void OnRep_BodyRotation();
@@ -139,6 +131,4 @@ private:
     UFUNCTION()
     void OnRep_SpringArmRotationClient();
     
-// =========================================================================================
-// -----------------------------------------------------------------------------------------
 };
