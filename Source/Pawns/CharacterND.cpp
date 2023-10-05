@@ -65,6 +65,7 @@ void ACharacterND::Look( const FInputActionValue& actionValue )
     if ( FMath::Abs(x) < 0.1f ) x = 0.0f;
     if ( FMath::Abs(y) < 0.1f ) y = 0.0f;
     if ( x == 0.0f && y == 0.0f ) return;
+    
     FRotator newActorRotation = FRotator( 0.0f, x, 0.0f ) + GetActorRotation();
     SetActorRotation(newActorRotation);
     Server_SetRotation( newActorRotation, false );
@@ -92,6 +93,7 @@ void ACharacterND::Move( const FInputActionValue& actionValue )
         return;
     }
     Server_SetWalking(true);
+
     FVector start;
     FVector end;
     GetMoveLineTraceParams( x, y, 20.0f, 500.0f, 10.0f, 10.0f, start, end );

@@ -14,7 +14,6 @@ APawnND::APawnND()
 void APawnND::BeginPlay()
 {
     Super::BeginPlay();
-    
     OnRep_Location();
     OnRep_Rotation();
 }
@@ -27,9 +26,7 @@ void APawnND::SetupPlayerInputComponent( UInputComponent* inputComponent )
 void APawnND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props ) const
 {
     Super::GetLifetimeReplicatedProps(props);
-
     TArray<FLifetimeProperty>& OutLifetimeProps = props;
-
     DOREPLIFETIME( APawnND, Id );
     DOREPLIFETIME_CONDITION( APawnND, Location,       COND_SkipOwner );
     DOREPLIFETIME_CONDITION( APawnND, LocationClient, COND_OwnerOnly );
@@ -61,7 +58,6 @@ void APawnND::Server_SetLocation_Implementation( const FLocation64& newLocation,
 {
     Location = newLocation;
     OnRep_Location();
-
     if (updateClient)
     {
         LocationClient = newLocation;
@@ -73,7 +69,6 @@ void APawnND::Server_SetRotation_Implementation( const FRotator& newRotation, bo
 {
     Rotation = newRotation;
     OnRep_Rotation();
-
     if (updateClient)
     {
         RotationClient = newRotation;
