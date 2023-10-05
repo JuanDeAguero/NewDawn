@@ -39,8 +39,6 @@ public:
     
 protected:
 
-    // -- Scene Components --
-
     class USceneComponent* Root;
 
     UPROPERTY(EditDefaultsOnly)
@@ -54,8 +52,6 @@ protected:
 
     UPROPERTY(EditDefaultsOnly)
     class UCameraComponent* Camera;
-    
-    // -- Input --
 
     UPROPERTY(EditDefaultsOnly)
     class UInputAction* IA_Look;
@@ -111,13 +107,9 @@ private:
 
     void Server_SetSitting_Implementation( bool newValue );
 
-    // -- Rep Implementations --
-
     void Server_SetBodyRotation_Implementation( const FRotator& newRotation, bool updateClient );
 
     void Server_SetSpringArmRotation_Implementation( const FRotator& newRotation, bool updateClient );
-                                                     
-    // -- On Rep --
 
     UFUNCTION()
     void OnRep_BodyRotation();

@@ -21,7 +21,7 @@ public:
 
     UFUNCTION( Server, Reliable )
     void Server_SpawnPawn( TSubclassOf<APawnND> pawnClass, const FLocation64& location, const FRotator& rotation,
-                           class APlayerControllerND* controller );
+        class APlayerControllerND* controller );
 
 protected:
 
@@ -35,7 +35,7 @@ private:
     void Server_SpawnActor_Implementation( TSubclassOf<AActorND> actorClass, const FLocation64& location, const FRotator& rotation );
 
     void Server_SpawnPawn_Implementation( TSubclassOf<APawnND> pawnClass, const FLocation64& location, const FRotator& rotation,
-                                          class APlayerControllerND* controller );
+        class APlayerControllerND* controller );
 
     int64 CreateActorId();
 

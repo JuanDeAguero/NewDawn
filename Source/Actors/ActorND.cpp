@@ -14,7 +14,6 @@ AActorND::AActorND()
 void AActorND::BeginPlay()
 {
     Super::BeginPlay();
-    
     OnRep_Location();
     OnRep_Rotation();
 }
@@ -22,9 +21,7 @@ void AActorND::BeginPlay()
 void AActorND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props ) const
 {
     Super::GetLifetimeReplicatedProps(props);
-
     TArray<FLifetimeProperty>& OutLifetimeProps = props;
-
     DOREPLIFETIME( AActorND, Id );
     DOREPLIFETIME_CONDITION( AActorND, Location,       COND_SkipOwner );
     DOREPLIFETIME_CONDITION( AActorND, LocationClient, COND_OwnerOnly );
@@ -56,7 +53,6 @@ void AActorND::Server_SetLocation_Implementation( const FLocation64& newLocation
 {
     Location = newLocation;
     OnRep_Location();
-
     if (updateClient)
     {
         LocationClient = newLocation;
@@ -68,7 +64,6 @@ void AActorND::Server_SetRotation_Implementation( const FRotator& newRotation, b
 {
     Rotation = newRotation;
     OnRep_Rotation();
-
     if (updateClient)
     {
         RotationClient = newRotation;

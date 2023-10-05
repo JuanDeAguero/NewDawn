@@ -16,9 +16,7 @@ ACharacterND::ACharacterND()
     Body      = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Body"));
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(   TEXT("SpringArm"));
     Camera    = CreateDefaultSubobject<UCameraComponent>(      TEXT("Camera"));
-
     RootComponent = Root;
-    
     Capsule->  SetupAttachment(Root);
     Body->     SetupAttachment(Root);
     SpringArm->SetupAttachment(Root);
@@ -30,9 +28,7 @@ ACharacterND::ACharacterND()
 void ACharacterND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props ) const
 {
     Super::GetLifetimeReplicatedProps(props);
-
     TArray<FLifetimeProperty>& OutLifetimeProps = props;
-
     DOREPLIFETIME( ACharacterND, Walking );
     DOREPLIFETIME( ACharacterND, Sitting );
     DOREPLIFETIME_CONDITION( ACharacterND, BodyRotation,            COND_SkipOwner );
@@ -44,9 +40,7 @@ void ACharacterND::GetLifetimeReplicatedProps( TArray<FLifetimeProperty>& props 
 void ACharacterND::SetupPlayerInputComponent( UInputComponent* inputComponent )
 {
     Super::SetupPlayerInputComponent(inputComponent);
-
     UEnhancedInputComponent* enhancedInputComponent = Cast<UEnhancedInputComponent>(inputComponent);
-
     enhancedInputComponent->BindAction( IA_Look,     ETriggerEvent::Triggered, this, &ACharacterND::Look );
     enhancedInputComponent->BindAction( IA_Move,     ETriggerEvent::Triggered, this, &ACharacterND::Move );
     enhancedInputComponent->BindAction( IA_Move,     ETriggerEvent::Completed, this, &ACharacterND::MoveCompleted );
@@ -68,20 +62,15 @@ void ACharacterND::Look( const FInputActionValue& actionValue )
     FVector2D axisValue = actionValue.Get<FVector2D>();
     float x = axisValue.X;
     float y = axisValue.Y;
-
     if ( FMath::Abs(x) < 0.1f ) x = 0.0f;
     if ( FMath::Abs(y) < 0.1f ) y = 0.0f;
-
     if ( x == 0.0f && y == 0.0f ) return;
-
     FRotator newActorRotation = FRotator( 0.0f, x, 0.0f ) + GetActorRotation();
     SetActorRotation(newActorRotation);
     Server_SetRotation( newActorRotation, false );
-
     FRotator newSpringArmRotation = FRotator( y, 0.0f, 0.0f ) + SpringArm->GetRelativeRotation();
     SpringArm->SetRelativeRotation(newSpringArmRotation);
     Server_SetSpringArmRotation( newSpringArmRotation, false );
-
     if (!Walking)
     {
         FRotator newBodyRotation = FRotator( 0.0f, -1.0f * x, 0.0f ) + Body->GetRelativeRotation();
@@ -95,29 +84,22 @@ void ACharacterND::Move( const FInputActionValue& actionValue )
     FVector2D axisValue = actionValue.Get<FVector2D>();
     float x = axisValue.X;
     float y = axisValue.Y;
-
     if ( FMath::Abs(x) < 0.1f ) x = 0.0f;
     if ( FMath::Abs(y) < 0.1f ) y = 0.0f;
-
     if ( x == 0.0f && y == 0.0f )
     {
         Server_SetWalking(false);
         return;
     }
-
     Server_SetWalking(true);
-
     FVector start;
     FVector end;
     GetMoveLineTraceParams( x, y, 20.0f, 500.0f, 10.0f, 10.0f, start, end );
-
     FCollisionQueryParams traceParams;
     FHitResult hitResult;
     GetWorld()->LineTraceSingleByChannel( hitResult, start, end, ECC_Visibility, traceParams );
-
     FVector hitLocation = hitResult.Location;
     FRotator rotation;
-
     switch (GravityProfile)
     {
         case EGravityProfile::Planet:
@@ -129,7 +111,6 @@ void ACharacterND::Move( const FInputActionValue& actionValue )
 
         }
     }
-
     SetActorLocation(hitLocation);
     //SetActorRotation(rotation);
     Body->SetRelativeRotation(FRotator( 0.0f, -90.0f, 0.0f ));
@@ -141,7 +122,6 @@ void ACharacterND::GetMoveLineTraceParams( float x, float y, float up, float dow
     FVector b = GetActorUpVector() * up;
     FVector c = GetActorRightVector() * x * right;
     FVector d = GetActorUpVector() * down;
-
     start = GetActorLocation() + a + b + c;
     end = start - d;
 }
@@ -180,7 +160,6 @@ void ACharacterND::Server_SetBodyRotation_Implementation( const FRotator& newRot
 {
     BodyRotation = newRotation;
     OnRep_BodyRotation();
-
     if (updateClient)
     {
         BodyRotationClient = newRotation;
@@ -192,7 +171,6 @@ void ACharacterND::Server_SetSpringArmRotation_Implementation( const FRotator& n
 {
     SpringArmRotation = newRotation;
     OnRep_SpringArmRotation();
-
     if (updateClient)
     {
         SpringArmRotationClient = newRotation;

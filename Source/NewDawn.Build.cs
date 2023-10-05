@@ -8,7 +8,6 @@ public class NewDawn : ModuleRules
         : base(target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
         PublicDependencyModuleNames.AddRange( new string[]
         {
             "Core",
@@ -18,7 +17,6 @@ public class NewDawn : ModuleRules
             "InputCore",
             "Voxel"
         });
-
         PrivateIncludePaths.AddRange( new string[] {
             "Actors",
             "Game",
